@@ -1,0 +1,1242 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Coppa del Mondo 2026 - Diritti Media Globali</title>
+    <style>
+        :root {
+            --bg-primary: #1a1a1a;
+            --bg-secondary: #2d2d2d;
+            --bg-tertiary: #3a3a3a;
+            --text-primary: #ffffff;
+            --text-secondary: #b0b0b0;
+            --accent-italia: #0066cc;
+            --accent-nord-america: #dc3545;
+            --accent-europa: #28a745;
+            --accent-mondo: #fd7e14;
+            --border-color: #444;
+            --hover-bg: #404040;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Arial, Helvetica, sans-serif;
+            background-color: var(--bg-primary);
+            color: var(--text-primary);
+            line-height: 1.6;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        header {
+            text-align: center;
+            padding: 40px 20px;
+            background: linear-gradient(135deg, var(--bg-secondary) 0%, var(--bg-tertiary) 100%);
+            border-radius: 12px;
+            margin-bottom: 30px;
+            border: 2px solid var(--border-color);
+        }
+
+        h1 {
+            font-size: 3em;
+            margin-bottom: 10px;
+            font-weight: 700;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+        }
+
+        .subtitle {
+            font-size: 1.3em;
+            color: var(--text-secondary);
+            font-weight: 300;
+        }
+
+        .section {
+            background-color: var(--bg-secondary);
+            border-radius: 12px;
+            margin-bottom: 25px;
+            border: 2px solid var(--border-color);
+            overflow: hidden;
+        }
+
+        .section-header {
+            padding: 25px 30px;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: background-color 0.2s;
+            border-bottom: 2px solid var(--border-color);
+        }
+
+        .section-header:hover {
+            background-color: var(--hover-bg);
+        }
+
+        .section-header h2 {
+            font-size: 2em;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .section-icon {
+            font-size: 0.8em;
+            transition: transform 0.3s;
+        }
+
+        .section.collapsed .section-icon {
+            transform: rotate(-90deg);
+        }
+
+        .section-content {
+            padding: 30px;
+            display: block;
+        }
+
+        .section.collapsed .section-content {
+            display: none;
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 0.5em;
+            font-weight: 600;
+            margin-left: 15px;
+        }
+
+        .badge-italia { background-color: var(--accent-italia); }
+        .badge-nord-america { background-color: var(--accent-nord-america); }
+        .badge-europa { background-color: var(--accent-europa); }
+        .badge-mondo { background-color: var(--accent-mondo); }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            font-size: 1.1em;
+        }
+
+        th {
+            background-color: var(--bg-tertiary);
+            padding: 18px;
+            text-align: left;
+            font-weight: 600;
+            border: 1px solid var(--border-color);
+            font-size: 1.15em;
+        }
+
+        td {
+            padding: 18px;
+            border: 1px solid var(--border-color);
+        }
+
+        tr:nth-child(even) {
+            background-color: rgba(255, 255, 255, 0.03);
+        }
+
+        tr:hover {
+            background-color: var(--hover-bg);
+        }
+
+        .cards-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin: 20px 0;
+        }
+
+        .card {
+            background-color: var(--bg-tertiary);
+            border-radius: 10px;
+            padding: 25px;
+            border: 2px solid var(--border-color);
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.4);
+        }
+
+        .card h3 {
+            font-size: 1.5em;
+            margin-bottom: 15px;
+            color: var(--text-primary);
+        }
+
+        .card-label {
+            color: var(--text-secondary);
+            font-size: 0.95em;
+            margin-bottom: 5px;
+        }
+
+        .card-value {
+            font-size: 1.1em;
+            margin-bottom: 15px;
+            font-weight: 500;
+        }
+
+        .alert {
+            padding: 20px 25px;
+            border-radius: 10px;
+            margin: 20px 0;
+            border-left: 5px solid;
+            font-size: 1.15em;
+        }
+
+        .alert-warning {
+            background-color: rgba(253, 126, 20, 0.15);
+            border-color: var(--accent-mondo);
+        }
+
+        .alert-info {
+            background-color: rgba(0, 102, 204, 0.15);
+            border-color: var(--accent-italia);
+        }
+
+        .bullet-list {
+            list-style: none;
+            padding: 0;
+        }
+
+        .bullet-list li {
+            padding: 12px 0;
+            padding-left: 35px;
+            position: relative;
+            font-size: 1.15em;
+        }
+
+        .bullet-list li:before {
+            content: "●";
+            position: absolute;
+            left: 10px;
+            color: var(--accent-europa);
+            font-size: 1.2em;
+        }
+
+        .status-icon {
+            font-size: 1.3em;
+            margin-right: 10px;
+        }
+
+        footer {
+            text-align: center;
+            padding: 30px;
+            margin-top: 40px;
+            color: var(--text-secondary);
+            border-top: 2px solid var(--border-color);
+            font-size: 1.1em;
+        }
+
+        .highlight-box {
+            background-color: rgba(40, 167, 69, 0.1);
+            border: 2px solid var(--accent-europa);
+            border-radius: 8px;
+            padding: 20px;
+            margin: 20px 0;
+        }
+
+        .highlight-box h3 {
+            color: var(--accent-europa);
+            margin-bottom: 15px;
+            font-size: 1.4em;
+        }
+
+        .sub-section {
+            margin-bottom: 20px;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            overflow: hidden;
+            background-color: var(--bg-tertiary);
+        }
+
+        .sub-section-header {
+            padding: 15px 20px;
+            cursor: pointer;
+            background-color: rgba(255, 255, 255, 0.03);
+            transition: background-color 0.2s;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .sub-section-header:hover {
+            background-color: var(--hover-bg);
+        }
+
+        .sub-section-header h3 {
+            font-size: 1.3em;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin: 0;
+        }
+
+        .sub-icon {
+            font-size: 0.7em;
+            transition: transform 0.3s;
+        }
+
+        .sub-section.collapsed .sub-icon {
+            transform: rotate(0deg);
+        }
+
+        .sub-section:not(.collapsed) .sub-icon {
+            transform: rotate(90deg);
+        }
+
+        .sub-section-content {
+            padding: 20px;
+            display: none;
+        }
+
+        .sub-section:not(.collapsed) .sub-section-content {
+            display: block;
+        }
+
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2em;
+            }
+            .section-header h2 {
+                font-size: 1.5em;
+            }
+            table {
+                font-size: 0.9em;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Coppa del Mondo 2026 - Diritti Media Globali</h1>
+        </header>
+
+        <!-- SOUTH AFRICA - DIRITTI HIGHLIGHTS E DISTRIBUZIONE -->
+        <div class="section">
+            <div class="section-header" onclick="toggleSection(this)">
+                <h2>
+                    <span class="section-icon">▼</span>
+                    SOUTH AFRICA - DIRITTI HIGHLIGHTS E DISTRIBUZIONE
+                    <span class="badge badge-mondo">Resto del Mondo</span>
+                </h2>
+            </div>
+            <div class="section-content">
+                <!-- Sub-accordion: La Catena di Diritti Primari -->
+                <div class="sub-section">
+                    <div class="sub-section-header" onclick="toggleSubSection(this)">
+                        <h3>
+                            <span class="sub-icon">▶</span>
+                            La Catena di Diritti Primari (Sud Africa)
+                        </h3>
+                    </div>
+                    <div class="sub-section-content">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Livello</th>
+                                    <th>Player</th>
+                                    <th>Tipo Diritto</th>
+                                    <th>Partite</th>
+                                    <th>Note</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td><strong>Livello 1</strong></td>
+                                    <td>New World TV</td>
+                                    <td>Diritti esclusivi Pay-TV</td>
+                                    <td>104 (tutte)</td>
+                                    <td>Titolare principale, ha diritto di sub-licensare</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Livello 2</strong></td>
+                                    <td>SABC (South African Broadcasting Corporation)</td>
+                                    <td>Sub-licenza Free-to-Air</td>
+                                    <td>34 (una al giorno)</td>
+                                    <td>Sub-licensee da New World TV, solo trasmissione limitata</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <div class="alert alert-warning">
+                            <strong>⚠️ Sub-licensing rights:</strong> New World TV detiene i diritti primari e può sub-licensare. SABC ha limitazioni territoriali e non può sub-licensare ulteriormente senza autorizzazione.
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Sub-accordion: Chi Contattare per gli Highlights -->
+                <div class="sub-section">
+                    <div class="sub-section-header" onclick="toggleSubSection(this)">
+                        <h3>
+                            <span class="sub-icon">▶</span>
+                            Chi Contattare per gli Highlights
+                        </h3>
+                    </div>
+                    <div class="sub-section-content">
+                        <div class="cards-grid">
+                            <div class="card" style="border: 3px solid var(--accent-europa);">
+                                <h3><span class="status-icon">✓</span>SCENARIO A: Clips/Highlights Brevi (&lt;5 min)</h3>
+                                <div class="card-label">Status</div>
+                                <div class="card-value" style="color: var(--accent-europa);">✓ CONSIGLIATO</div>
+                                <div class="card-label">Contatto</div>
+                                <div class="card-value">FIFA Films Archive</div>
+                                <div class="card-label">Email</div>
+                                <div class="card-value">info@fifafilms.com</div>
+                                <div class="card-label">Descrizione</div>
+                                <div class="card-value">La FIFA Films Archive è il braccio commerciale che licenza footage a produttori terzi</div>
+                                <div class="card-label" style="margin-top: 15px;">Processo:</div>
+                                <ul class="bullet-list" style="font-size: 0.95em;">
+                                    <li>Scrivi a FIFA Films con descrizione del progetto</li>
+                                    <li>Specifica: durata clip, territorio (Sud Africa), piattaforma</li>
+                                    <li>Negozia: fee per clip oppure royalty su ricavi</li>
+                                    <li>Ottieni: autorizzazione scritta e file autorizzati</li>
+                                </ul>
+                            </div>
+
+                            <div class="card" style="border: 3px solid var(--accent-nord-america);">
+                                <h3><span class="status-icon">✗</span>SCENARIO B: Diritti Completi Live + Highlights</h3>
+                                <div class="card-label">Status</div>
+                                <div class="card-value" style="color: var(--accent-nord-america);">✗ NON DISPONIBILE</div>
+                                <div class="card-label">Descrizione</div>
+                                <div class="card-value">Non è possibile acquisire diritti completi direttamente</div>
+                                <div class="card-label" style="margin-top: 15px;">Alternativa:</div>
+                                <div class="card-value">Contatta New World TV (titolare esclusivo) o SABC (limitato a 34 partite, richiede autorizzazione FIFA)</div>
+                            </div>
+
+                            <div class="card" style="border: 3px solid var(--accent-mondo);">
+                                <h3><span class="status-icon">⚠️</span>SCENARIO C: Partnership New World TV</h3>
+                                <div class="card-label">Status</div>
+                                <div class="card-value" style="color: var(--accent-mondo);">⚠️ POSSIBILE MA COMPLESSA</div>
+                                <div class="card-label">Contatto</div>
+                                <div class="card-value">Nimonka Kolani, Managing Director</div>
+                                <div class="card-label">Company</div>
+                                <div class="card-value">New World TV</div>
+                                <div class="card-label">Descrizione</div>
+                                <div class="card-value">Accesso a tutte le 104 partite tramite sub-sub-licenza</div>
+                                <div class="card-label">Costi</div>
+                                <div class="card-value">Significativi, negoziazione diretta</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Sub-accordion: Canali Free-to-Air Disponibili -->
+                <div class="sub-section">
+                    <div class="sub-section-header" onclick="toggleSubSection(this)">
+                        <h3>
+                            <span class="sub-icon">▶</span>
+                            Canali Free-to-Air Disponibili
+                        </h3>
+                    </div>
+                    <div class="sub-section-content">
+                        <div class="alert alert-warning">
+                            <strong>⚠️ Alert:</strong> Nessun canale "gratuito globale" distribuisce il torneo intero
+                        </div>
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Canale</th>
+                                    <th>Scope</th>
+                                    <th>Partite</th>
+                                    <th>Formato</th>
+                                    <th>Contatti</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td><strong>SABC (Free-to-Air)</strong></td>
+                                    <td>Trasmissione lineare + Streaming app (SABC Plus)</td>
+                                    <td>34 su 104</td>
+                                    <td>Copertura completa con analisi</td>
+                                    <td>Keletso Totlhanyo, SABC Sport</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>New World TV (Pay)</strong></td>
+                                    <td>Piattaforma a pagamento</td>
+                                    <td>104 (tutte)</td>
+                                    <td>Accesso completo</td>
+                                    <td>Nimonka Kolani, New World TV</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>FIFA+ su DAZN</strong></td>
+                                    <td>Global streaming (lancio 2026)</td>
+                                    <td>Highlight reel selezionati</td>
+                                    <td>Freemium + contenuti dietro le quinte</td>
+                                    <td>DAZN (non specifico Sud Africa)</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- Sub-accordion: Modello Legale per Distribuire Highlights -->
+                <div class="sub-section">
+                    <div class="sub-section-header" onclick="toggleSubSection(this)">
+                        <h3>
+                            <span class="sub-icon">▶</span>
+                            Modello Legale per Distribuire Highlights
+                        </h3>
+                    </div>
+                    <div class="sub-section-content">
+                        <div class="highlight-box" style="border-color: var(--accent-europa);">
+                            <h3 style="color: var(--accent-europa);">✓ OPZIONE 1: Licenza Diretta da FIFA Films (CONSIGLIATA)</h3>
+                            <div style="font-size: 1.1em; line-height: 1.8;">
+                                <strong>Step da seguire:</strong>
+                                <ol style="margin-left: 25px; margin-top: 15px;">
+                                    <li style="margin-bottom: 10px;"><strong>Contatta:</strong> info@fifafilms.com</li>
+                                    <li style="margin-bottom: 10px;"><strong>Proponi:</strong> descrizione dettagliata (uso, durata clip, piattaforma, territorio)</li>
+                                    <li style="margin-bottom: 10px;"><strong>Negozia:</strong> fee per clip O royalty su ricavi; vincoli di branding; restrizioni geografiche; durata della licenza</li>
+                                    <li style="margin-bottom: 10px;"><strong>Esecuzione:</strong> ottieni accordo scritto; ricevi file autorizzati in formati specifici</li>
+                                </ol>
+                                <div style="margin-top: 20px; padding: 15px; background-color: rgba(40, 167, 69, 0.1); border-radius: 8px;">
+                                    <strong>Fee Options:</strong>
+                                    <ul style="margin-left: 20px; margin-top: 10px;">
+                                        <li>Canone di licenza fisso per clip</li>
+                                        <li>Quota su ricavi pubblicitari (royalty)</li>
+                                        <li>Ibrido (minimo garantito + royalty)</li>
+                                    </ul>
+                                </div>
+                                <div style="margin-top: 15px; padding: 15px; background-color: rgba(253, 126, 20, 0.1); border-radius: 8px;">
+                                    <strong>Vincoli:</strong>
+                                    <ul style="margin-left: 20px; margin-top: 10px;">
+                                        <li>Branding FIFA obbligatorio</li>
+                                        <li>Disclaimer legali necessari</li>
+                                        <li>Restrizioni geografiche (solo Sud Africa)</li>
+                                        <li>Durata licenza negoziabile</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="highlight-box" style="border-color: var(--accent-nord-america); margin-top: 20px;">
+                            <h3 style="color: var(--accent-nord-america);">✗ OPZIONE 2: Sottolicenza da SABC (DIFFICILE)</h3>
+                            <div style="font-size: 1.1em; line-height: 1.8;">
+                                <p><strong>Problema:</strong> SABC è a sua volta sub-licensee e non ha diritti di sub-licensare ulteriormente senza autorizzazione FIFA/New World TV</p>
+                                <p style="margin-top: 10px;"><strong>Conclusione:</strong> Teoricamente possibile ma richiederebbe autorizzazione a cascata molto complicata. Non raccomandato.</p>
+                            </div>
+                        </div>
+
+                        <div class="highlight-box" style="border-color: var(--accent-mondo); margin-top: 20px;">
+                            <h3 style="color: var(--accent-mondo);">⚠️ OPZIONE 3: Partnership con New World TV (POSSIBILE MA COMPLESSA)</h3>
+                            <div style="font-size: 1.1em; line-height: 1.8;">
+                                <p><strong>Scenario:</strong> Se vuoi accesso a tutte le 104 partite, negozia direttamente con New World TV</p>
+                                <p style="margin-top: 10px;"><strong>Contatto:</strong> Nimonka Kolani, Managing Director, New World TV</p>
+                                <p style="margin-top: 10px;"><strong>Nota:</strong> Potrebbero offrirti sub-sub-licenza ma a costi molto significativi. Adatto solo per partnership commerciali importanti.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Sub-accordion: Cosa NON Puoi Fare (Rischi Legali) -->
+                <div class="sub-section">
+                    <div class="sub-section-header" onclick="toggleSubSection(this)">
+                        <h3>
+                            <span class="sub-icon">▶</span>
+                            Cosa NON Puoi Fare (Rischi Legali)
+                        </h3>
+                    </div>
+                    <div class="sub-section-content">
+                        <div class="alert alert-warning" style="border-color: var(--accent-nord-america); background-color: rgba(220, 53, 69, 0.15);">
+                            <strong>⚠️ ATTENZIONE:</strong> Le seguenti azioni sono illegali e comportano gravi conseguenze
+                        </div>
+                        <div class="highlight-box" style="border-color: var(--accent-nord-america);">
+                            <h3 style="color: var(--accent-nord-america);">❌ Attività Vietate</h3>
+                            <ul class="bullet-list" style="font-size: 1.1em;">
+                                <li><strong>❌ Riprodurre clips senza licenza</strong> - Viola diritti esclusivi di New World TV/SABC</li>
+                                <li><strong>❌ Utilizzare il feed SABC o New World TV</strong> - Senza accordo scritto è violazione copyright</li>
+                                <li><strong>❌ Monetizzare o lucrare su highlights non autorizzati</strong> - Violazione copyright commerciale</li>
+                                <li><strong>❌ Distribuire contenuto al di fuori del territorio Sud Africa</strong> - Violazione restrizioni territoriali</li>
+                            </ul>
+                        </div>
+                        <div class="highlight-box" style="border-color: var(--accent-nord-america); margin-top: 20px;">
+                            <h3 style="color: var(--accent-nord-america);">⚖️ Conseguenze Legali</h3>
+                            <ul class="bullet-list" style="font-size: 1.1em;">
+                                <li><strong>Takedown notice</strong> dalle piattaforme (YouTube, social media, etc.)</li>
+                                <li><strong>Chiusura della piattaforma</strong> o account permanente</li>
+                                <li><strong>Danni legali potenziali</strong> - Cause civili per violazione copyright</li>
+                                <li><strong>Sanzioni FIFA</strong> - Ban da eventi futuri, blacklist da fornitori ufficiali</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Sub-accordion: Timeline e Prossimi Passi -->
+                <div class="sub-section">
+                    <div class="sub-section-header" onclick="toggleSubSection(this)">
+                        <h3>
+                            <span class="sub-icon">▶</span>
+                            Timeline e Prossimi Passi
+                        </h3>
+                    </div>
+                    <div class="sub-section-content">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Periodo</th>
+                                    <th>Azione</th>
+                                    <th>Task Specifici</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td><strong>Novembre 2025 (ORA)</strong></td>
+                                    <td>Invia richiesta informale a info@fifafilms.com descrivendo il tuo prodotto</td>
+                                    <td>Richiedi quote preliminari e termini standard</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Dicembre 2025 - Gennaio 2026</strong></td>
+                                    <td>Negozia i termini specifici (fee, durata, esclusività)</td>
+                                    <td>Ottieni proposta di accordo; stabilisci processo di fornitura file; sottoscrivi accordo</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Giugno 2026</strong></td>
+                                    <td>Il torneo inizia; contenuti diventano live</td>
+                                    <td>Rispetta timing di embargo (es. non pubblicare prima di X ore dalla fine partita)</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <div class="highlight-box">
+                            <h3>✅ Checklist Prossimi Step</h3>
+                            <ul class="bullet-list" style="font-size: 1.1em;">
+                                <li>Prepara descrizione dettagliata del progetto (piattaforma, target audience, modello business)</li>
+                                <li>Identifica durata clips necessarie e numero stimato</li>
+                                <li>Definisci budget preliminare per licensing</li>
+                                <li>Contatta FIFA Films Archive entro fine novembre 2025</li>
+                                <li>Pianifica processo di approvazione interno per fine gennaio 2026</li>
+                                <li>Prepara infrastruttura tecnica per ricezione e distribuzione file</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- EXECUTIVE SUMMARY -->
+        <div class="section">
+            <div class="section-header" onclick="toggleSection(this)">
+                <h2>
+                    <span class="section-icon">▼</span>
+                    Executive Summary
+                    <span class="badge badge-europa">Panoramica</span>
+                </h2>
+            </div>
+            <div class="section-content">
+                <div class="cards-grid">
+                    <div class="card">
+                        <h3>📊 Dati Chiave</h3>
+                        <div class="card-label">Formato Torneo</div>
+                        <div class="card-value">48 squadre (da 32)</div>
+                        <div class="card-label">Partite Totali</div>
+                        <div class="card-value">104 partite (da 64)</div>
+                    </div>
+                    <div class="card">
+                        <h3>🏟️ Host Nations</h3>
+                        <div class="card-label">Paesi Ospitanti</div>
+                        <div class="card-value">USA, Canada, Messico</div>
+                        <div class="card-label">Città</div>
+                        <div class="card-value">16 città</div>
+                    </div>
+                    <div class="card">
+                        <h3>🇮🇹 Situazione Italia</h3>
+                        <div class="card-label">Bando</div>
+                        <div class="card-value">Chiuso 25 novembre 2025</div>
+                        <div class="card-label">Status</div>
+                        <div class="card-value"><span class="status-icon">⏳</span>In attesa</div>
+                    </div>
+                    <div class="card">
+                        <h3>💰 Ricavi Stimati</h3>
+                        <div class="card-label">Ricavi Globali FIFA</div>
+                        <div class="card-value">&gt;7 miliardi USD</div>
+                        <div class="card-label">Strategia</div>
+                        <div class="card-value">Segmentazione per mercato</div>
+                    </div>
+                </div>
+
+                <div class="alert alert-info">
+                    <strong>🎯 Contendenti Italiani:</strong> RAI (servizio pubblico), Mediaset (privata free), Sky Italia (pay), Amazon Prime Video (streaming)
+                </div>
+
+                <div class="alert alert-warning">
+                    <strong>⚠️ Fattore Critico:</strong> Qualificazione Italia condizionata ai playoff di marzo 2026
+                </div>
+            </div>
+        </div>
+
+        <!-- ITALIA -->
+        <div class="section">
+            <div class="section-header" onclick="toggleSection(this)">
+                <h2>
+                    <span class="section-icon">▼</span>
+                     Italia
+                    <span class="badge badge-italia">Mercato Domestico</span>
+                </h2>
+            </div>
+            <div class="section-content">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Milestone</th>
+                            <th>Data</th>
+                            <th>Status</th>
+                            <th>Note</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Chiusura Bando</strong></td>
+                            <td>25 novembre 2025</td>
+                            <td><span class="status-icon">✓</span>Concluso</td>
+                            <td>Offerte ricevute</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Contendenti</strong></td>
+                            <td>-</td>
+                            <td><span class="status-icon">⏳</span>In valutazione</td>
+                            <td>RAI, Mediaset, Sky Italia, Amazon/Prime</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Playoff Qualificazione</strong></td>
+                            <td>Marzo 2026</td>
+                            <td><span class="status-icon">⚠️</span>Fattore rischio</td>
+                            <td>Impatta sulla valutazione dei diritti</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Assegnazione Attesa</strong></td>
+                            <td>Entro fine 2025</td>
+                            <td><span class="status-icon">⏳</span>Imminente</td>
+                            <td>Annuncio previsto a breve</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <div class="highlight-box">
+                    <h3>📌 Il Nodo Qualificazione</h3>
+                    <p style="font-size: 1.1em; line-height: 1.8;">
+                        L'Italia dovrà superare i playoff di marzo 2026 per garantirsi la partecipazione al Mondiale. 
+                        Questo fattore influenza pesantemente il valore commerciale dei diritti TV, creando incertezza 
+                        per gli acquirenti. La FIFA e i broadcaster italiani stanno negoziando formule che tengano conto 
+                        di questo rischio, probabilmente con clausole condizionate alla qualificazione.
+                    </p>
+                </div>
+
+                <div class="alert alert-info">
+                    <strong>💡 Prospettive:</strong> L'assegnazione è attesa entro fine 2025. Il modello potrebbe essere ibrido (free-to-air + streaming/pay) come in altri mercati europei.
+                </div>
+            </div>
+        </div>
+
+        <!-- NORD AMERICA -->
+        <div class="section">
+            <div class="section-header" onclick="toggleSection(this)">
+                <h2>
+                    <span class="section-icon">▼</span>
+                    Nord America
+                    <span class="badge badge-nord-america">Host Nations</span>
+                </h2>
+            </div>
+            <div class="section-content">
+                <div class="cards-grid">
+                    <div class="card">
+                        <h3>🇺🇸 USA - Inglese</h3>
+                        <div class="card-label">Emittente</div>
+                        <div class="card-value">Fox Sports</div>
+                        <div class="card-label">Valore Stimato</div>
+                        <div class="card-value">&gt;$300 milioni</div>
+                        <div class="card-label">Storia</div>
+                        <div class="card-value">Estensione contrattuale 2015 senza gara aperta</div>
+                    </div>
+
+                    <div class="card">
+                        <h3>🇺🇸 USA - Spagnolo</h3>
+                        <div class="card-label">Emittente</div>
+                        <div class="card-value">Telemundo (NBCUniversal)</div>
+                        <div class="card-label">Valore Stimato</div>
+                        <div class="card-value">&gt;$350 milioni</div>
+                        <div class="card-label">Target</div>
+                        <div class="card-value">Pubblico ispanico USA - crescente importanza</div>
+                    </div>
+
+                    <div class="card">
+                        <h3>🇨🇦 Canada</h3>
+                        <div class="card-label">Emittente</div>
+                        <div class="card-value">CTV / TSN (Bell Media)</div>
+                        <div class="card-label">Modello</div>
+                        <div class="card-value">Ibrido: CTV (free-to-air) + TSN (pay)</div>
+                        <div class="card-label">Copertura</div>
+                        <div class="card-value">Nazionale, tutte le partite disponibili</div>
+                    </div>
+
+                    <div class="card">
+                        <h3>🇲🇽 Messico</h3>
+                        <div class="card-label">Emittente Principale</div>
+                        <div class="card-value">Televisa / TUDN</div>
+                        <div class="card-label">Sub-licensing</div>
+                        <div class="card-value">TV Azteca (trasmissioni free-to-air)</div>
+                        <div class="card-label">Note</div>
+                        <div class="card-value">Partnership storica con FIFA</div>
+                    </div>
+                </div>
+
+                <div class="alert alert-info">
+                    <strong>🎯 Strategia Host Nations:</strong> I tre paesi ospitanti hanno garantito pacchetti premium con valori record, riflettendo l'importanza commerciale dell'evento sul proprio territorio.
+                </div>
+            </div>
+        </div>
+
+        <!-- EUROPA - GRANDI MERCATI -->
+        <div class="section">
+            <div class="section-header" onclick="toggleSection(this)">
+                <h2>
+                    <span class="section-icon">▼</span>
+                    Europa - Grandi Mercati (Big 5)
+                    <span class="badge badge-europa">Accordi Diretti</span>
+                </h2>
+            </div>
+            <div class="section-content">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Paese</th>
+                            <th>Emittente Principale</th>
+                            <th>Free-to-Air?</th>
+                            <th>Partner Pay/Streaming</th>
+                            <th>Note Rilevanti</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>🇬🇧 Regno Unito</strong></td>
+                            <td>BBC &amp; ITV</td>
+                            <td><span class="status-icon">✓</span>Sì (100%)</td>
+                            <td>-</td>
+                            <td>Accordo congiunto, finale in simulcast</td>
+                        </tr>
+                        <tr>
+                            <td><strong>🇫🇷 Francia</strong></td>
+                            <td>M6</td>
+                            <td><span class="status-icon">✓</span>Sì</td>
+                            <td>-</td>
+                            <td>54 partite inclusa finale - ha battuto TF1</td>
+                        </tr>
+                        <tr>
+                            <td><strong>🇩🇪 Germania</strong></td>
+                            <td>ARD &amp; ZDF</td>
+                            <td><span class="status-icon">✓</span>Sì (parziale)</td>
+                            <td>MagentaTV (Deutsche Telekom)</td>
+                            <td>Modello ibrido: free + esclusiva pay</td>
+                        </tr>
+                        <tr>
+                            <td><strong>🇪🇸 Spagna</strong></td>
+                            <td>Mediapro</td>
+                            <td><span class="status-icon">✓</span>Sì (RTVE)</td>
+                            <td>Mediapro (pacchetto completo)</td>
+                            <td>RTVE sublicenzia per free-to-air</td>
+                        </tr>
+                        <tr>
+                            <td><strong>🇮🇹 Italia</strong></td>
+                            <td><em>In assegnazione</em></td>
+                            <td><span class="status-icon">⏳</span>Da definire</td>
+                            <td>RAI, Mediaset, Sky, Amazon in gara</td>
+                            <td>Condizionato da playoff qualificazione</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <div class="highlight-box">
+                    <h3>📊 Analisi Comparativa</h3>
+                    <p style="font-size: 1.1em; line-height: 1.8;">
+                        Tutti i principali mercati europei hanno già assegnato i diritti, con una predominanza di accordi free-to-air 
+                        (BBC/ITV, M6, ARD/ZDF, RTVE) per garantire l'accesso universale. L'Italia è l'unica tra i Big 5 ancora in fase 
+                        di negoziazione, principalmente a causa dell'incertezza sulla qualificazione.
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <!-- EUROPA - EBU -->
+        <div class="section">
+            <div class="section-header" onclick="toggleSection(this)">
+                <h2>
+                    <span class="section-icon">▼</span>
+                    Europa - Accordo EBU
+                    <span class="badge badge-europa">30+ Paesi</span>
+                </h2>
+            </div>
+            <div class="section-content">
+                <div class="alert alert-warning">
+                    <strong>⚠️ Importante:</strong> L'Italia NON rientra in questo accordo collettivo e negozia autonomamente con la FIFA.
+                </div>
+
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Regione/Paese</th>
+                            <th>Emittente</th>
+                            <th>Tipo</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>🇧🇬 Bulgaria</strong></td>
+                            <td>BNT (Bulgarian National Television)</td>
+                            <td>Servizio Pubblico</td>
+                        </tr>
+                        <tr>
+                            <td><strong>🇨🇿 Repubblica Ceca</strong></td>
+                            <td>Česká televize</td>
+                            <td>Servizio Pubblico</td>
+                        </tr>
+                        <tr>
+                            <td><strong>🇭🇷 Croazia</strong></td>
+                            <td>HRT (Hrvatska radiotelevizija)</td>
+                            <td>Servizio Pubblico</td>
+                        </tr>
+                        <tr>
+                            <td><strong>🇭🇺 Ungheria</strong></td>
+                            <td>MTVA (Magyar Televízió)</td>
+                            <td>Servizio Pubblico</td>
+                        </tr>
+                        <tr>
+                            <td><strong>🇮🇸 Islanda</strong></td>
+                            <td>RÚV (Ríkisútvarpið)</td>
+                            <td>Servizio Pubblico</td>
+                        </tr>
+                        <tr>
+                            <td><strong>🇦🇿 Azerbaigian</strong></td>
+                            <td>İTV (İctimai Televiziya)</td>
+                            <td>Servizio Pubblico</td>
+                        </tr>
+                        <tr>
+                            <td><strong>🇲🇹 Malta</strong></td>
+                            <td>PBS (Public Broadcasting Services)</td>
+                            <td>Servizio Pubblico</td>
+                        </tr>
+                        <tr>
+                            <td><strong>🇮🇱 Israele</strong></td>
+                            <td>KAN (Israeli Public Broadcasting)</td>
+                            <td>Servizio Pubblico</td>
+                        </tr>
+                        <tr>
+                            <td colspan="3" style="text-align: center; font-style: italic; background-color: var(--bg-tertiary);">
+                                + altri 22 paesi coperti dall'accordo EBU
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <div class="highlight-box">
+                    <h3>📌 Accordo EBU - Caratteristiche</h3>
+                    <ul class="bullet-list">
+                        <li>Copre oltre 30 paesi europei di piccole e medie dimensioni</li>
+                        <li>Trasmissioni free-to-air tramite emittenti di servizio pubblico</li>
+                        <li>Negoziazione collettiva coordinata dall'European Broadcasting Union</li>
+                        <li>Garantisce accesso universale in mercati meno appetibili commercialmente</li>
+                        <li>I Big 5 (UK, Francia, Germania, Spagna, Italia) negoziano separatamente</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- RESTO DEL MONDO -->
+        <div class="section">
+            <div class="section-header" onclick="toggleSection(this)">
+                <h2>
+                    <span class="section-icon">▼</span>
+                    Resto del Mondo
+                    <span class="badge badge-mondo">Mercati Globali</span>
+                </h2>
+            </div>
+            <div class="section-content">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Regione/Paese</th>
+                            <th>Emittente</th>
+                            <th>Copertura</th>
+                            <th>Note</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>🌍 MENA</strong></td>
+                            <td>beIN Sports</td>
+                            <td>24 paesi (Medio Oriente e Nord Africa)</td>
+                            <td>Dominanza regionale, pacchetto esclusivo</td>
+                        </tr>
+                        <tr>
+                            <td><strong>🇧🇷 Brasile</strong></td>
+                            <td>TV Globo</td>
+                            <td>Nazionale</td>
+                            <td>Partner storico FIFA, free-to-air</td>
+                        </tr>
+                        <tr>
+                            <td><strong>🇨🇳 Cina</strong></td>
+                            <td>CCTV</td>
+                            <td>Nazionale</td>
+                            <td>Emittente di stato, partnership di lunga data</td>
+                        </tr>
+                        <tr>
+                            <td><strong>🇮🇳 India</strong></td>
+                            <td>Sports18 (Viacom18)</td>
+                            <td>Nazionale + streaming</td>
+                            <td>Ha scalzato Sony Six dopo Qatar 2022</td>
+                        </tr>
+                        <tr>
+                            <td><strong>✈️ In-Flight &amp; Crociere</strong></td>
+                            <td>IMG (Sport 24)</td>
+                            <td>Globale (aerei e navi)</td>
+                            <td>Esclusiva per distribuzione in-flight</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <div class="cards-grid">
+                    <div class="card">
+                        <h3>🌍 MENA - beIN Sports</h3>
+                        <div class="card-value">24 paesi coperti in Medio Oriente e Nord Africa, con un investimento record per la regione. Modello pay-TV premium.</div>
+                    </div>
+                    <div class="card">
+                        <h3>🇧🇷 Brasile - TV Globo</h3>
+                        <div class="card-value">Partnership storica con FIFA. Trasmissioni free-to-air per garantire massima audience nel paese più titolato al mondo.</div>
+                    </div>
+                    <div class="card">
+                        <h3>🇨🇳 Cina - CCTV</h3>
+                        <div class="card-value">Emittente di stato cinese, partner FIFA di lunga data. Copertura gratuita per il vasto mercato cinese.</div>
+                    </div>
+                    <div class="card">
+                        <h3>✈️ In-Flight - IMG</h3>
+                        <div class="card-value">Sport 24 detiene l'esclusiva globale per trasmissioni su aerei e navi da crociera. Primo mondiale con copertura completa in volo.</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- SINTESI STRATEGICA -->
+        <div class="section">
+            <div class="section-header" onclick="toggleSection(this)">
+                <h2>
+                    <span class="section-icon">▼</span>
+                    Sintesi Strategica FIFA
+                    <span class="badge badge-europa">Analisi</span>
+                </h2>
+            </div>
+            <div class="section-content">
+                <div class="highlight-box">
+                    <h3>📈 Strategia di Massimizzazione Ricavi</h3>
+                    <ul class="bullet-list">
+                        <li><strong>Espansione a 48 squadre:</strong> 104 partite totali (vs 64 precedenti) = 62% più contenuti da vendere</li>
+                        <li><strong>Segmentazione geografica:</strong> Accordi diretti nei mercati ricchi (Big 5 EU, Nord America), collettivi nei minori (EBU)</li>
+                        <li><strong>Modello free vs pay:</strong> Free-to-air nei mercati maturi per massimizzare audience, pay-TV dove sostenibile</li>
+                        <li><strong>Host nations premium:</strong> USA, Canada e Messico pagano valori record per pacchetti domestici</li>
+                        <li><strong>Timing contrattuale:</strong> Negoziazioni aperte 3-4 anni prima dell'evento per massimizzare competizione</li>
+                    </ul>
+                </div>
+
+                <div class="cards-grid">
+                    <div class="card">
+                        <h3>💰 Impatto Economico</h3>
+                        <div class="card-label">Ricavi Globali Stimati</div>
+                        <div class="card-value">&gt;7 miliardi USD</div>
+                        <div class="card-label">Crescita vs 2022</div>
+                        <div class="card-value">+40-50% stimato</div>
+                    </div>
+                    <div class="card">
+                        <h3>📊 Competizione Mercato</h3>
+                        <div class="card-label">Broadcaster Coinvolti</div>
+                        <div class="card-value">200+ emittenti globalmente</div>
+                        <div class="card-label">Modelli</div>
+                        <div class="card-value">Free, Pay, Streaming, Ibrido</div>
+                    </div>
+                    <div class="card">
+                        <h3>🎲 Fattore Qualificazioni</h3>
+                        <div class="card-label">Rischio Pricing</div>
+                        <div class="card-value">Italia, altri top team in playoff</div>
+                        <div class="card-label">Impatto</div>
+                        <div class="card-value">Clausole condizionate, ritardi assegnazione</div>
+                    </div>
+                    <div class="card">
+                        <h3>🌐 Distribuzione Digitale</h3>
+                        <div class="card-label">Streaming</div>
+                        <div class="card-value">Amazon, DAZN, altri OTT in crescita</div>
+                        <div class="card-label">Trend</div>
+                        <div class="card-value">Prima generazione con streaming massivo</div>
+                    </div>
+                </div>
+
+                <div class="alert alert-info">
+                    <strong>🔮 Prospettive Future:</strong> Il Mondiale 2026 segna un punto di svolta con l'espansione a 48 squadre e la massiccia presenza di piattaforme streaming. 
+                    La FIFA ha ottimizzato la segmentazione per mercato, bilanciando accesso universale (free-to-air) e monetizzazione premium (pay/streaming).
+                </div>
+
+                <div class="highlight-box">
+                    <h3>✅ Punti Chiave per la Presentazione</h3>
+                    <ul class="bullet-list">
+                        <li>Espansione formato = +62% contenuti vendibili (104 vs 64 partite)</li>
+                        <li>Host nations (USA/Canada/Messico) = pacchetti record (&gt;$650M solo USA)</li>
+                        <li>Europa Big 5: tutti assegnati tranne Italia (condizionata da playoff)</li>
+                        <li>Free-to-air dominante in EU per accesso universale, pay in crescita</li>
+                        <li>Mercati emergenti (MENA, India) con investimenti crescenti</li>
+                        <li>Streaming OTT (Amazon, DAZN) competono direttamente con broadcaster tradizionali</li>
+                        <li>Ricavi globali stimati &gt;7 miliardi USD (+40-50% vs Qatar 2022)</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- FONTI E RIFERIMENTI DELLA RICERCA -->
+        <div class="section" id="fonti">
+            <div class="section-header" onclick="toggleSection(this)">
+                <h2>
+                    <span class="section-icon">▼</span>
+                    FONTI E RIFERIMENTI DELLA RICERCA
+                    <span class="badge badge-mondo">Documentazione</span>
+                </h2>
+            </div>
+            <div class="section-content" style="font-size: 0.9em;">
+
+                <!-- South Africa Sources -->
+                <div class="highlight-box" style="border-color: var(--accent-mondo); margin-top: 25px;">
+                    <h3 style="color: var(--accent-mondo);">🇿🇦 Fonti Sud Africa</h3>
+                    <div style="line-height: 2;">
+                        <p style="margin-bottom: 15px;">
+                            <strong>[1]</strong> "Sub-Saharan Africa media rights for FIFA World Cup 26™ and FIFA World Cup 2030™ - New World Television" - inside.fifa.com - 18 giugno 2025<br>
+                            <a href="https://inside.fifa.com/news/sub-saharan-africa-media-rights-world-cup-womens-new-world-televisions" target="_blank" style="color: var(--accent-mondo); text-decoration: underline;">https://inside.fifa.com/news/sub-saharan-africa-media-rights-world-cup-womens-new-world-televisions</a>
+                        </p>
+                        <p style="margin-bottom: 15px;">
+                            <strong>[2]</strong> "South Africa: SABC Secures Sponsorship To Broadcast Enable Free-to-Air Broadcast of 2026 FIFA World Cup" - Broadcast Media Africa - 10 settembre 2025<br>
+                            <a href="https://news.broadcastmediaafrica.com/2025/09/11/south-africa-sabc-secures-sponsorship-to-broadcast-enable-free-to-air-broadcast" target="_blank" style="color: var(--accent-mondo); text-decoration: underline;">https://news.broadcastmediaafrica.com/2025/09/11/south-africa-sabc-secures-sponsorship-to-broadcast-enable-free-to-air-broadcast</a>
+                        </p>
+                        <p style="margin-bottom: 15px;">
+                            <strong>[3]</strong> "SuperSport secures rights to broadcast African qualifiers for 2026 FIFA World Cup" - SuperSport.com - 19 marzo 2025<br>
+                            <a href="https://supersport.com/football/general/news/9be0bf30-b522-4db2-95a8-583213194671/supersport-secures-rights-to-broadcast-african" target="_blank" style="color: var(--accent-mondo); text-decoration: underline;">https://supersport.com/football/general/news/9be0bf30-b522-4db2-95a8-583213194671/supersport-secures-rights-to-broadcast-african</a>
+                        </p>
+                        <p style="margin-bottom: 15px;">
+                            <strong>[4]</strong> "SuperSport nets rights to remaining African qualifiers for 2026 World Cup" - Sportcal - 3 aprile 2025<br>
+                            <a href="https://www.sportcal.com/media/supersport-nets-rights-to-remaining-african-qualifiers-for-2026-world-cup/" target="_blank" style="color: var(--accent-mondo); text-decoration: underline;">https://www.sportcal.com/media/supersport-nets-rights-to-remaining-african-qualifiers-for-2026-world-cup/</a>
+                        </p>
+                        <p style="margin-bottom: 15px;">
+                            <strong>[5]</strong> "FIFA Films - Media Rights &amp; Archives" - inside.fifa.com<br>
+                            <a href="https://inside.fifa.com/tournament-organisation/commercial/fifa-tv/fifa-films" target="_blank" style="color: var(--accent-mondo); text-decoration: underline;">https://inside.fifa.com/tournament-organisation/commercial/fifa-tv/fifa-films</a>
+                        </p>
+                        <p style="margin-bottom: 15px;">
+                            <strong>[6]</strong> "FIFA and DAZN announce the ultimate global football platform – FIFA+" - inside.fifa.com - 28 ottobre 2025<br>
+                            <a href="https://inside.fifa.com/organisation/media-releases/fifa-and-dazn-announce-the-ultimate-global-football-platform-fifa-plus" target="_blank" style="color: var(--accent-mondo); text-decoration: underline;">https://inside.fifa.com/organisation/media-releases/fifa-and-dazn-announce-the-ultimate-global-football-platform-fifa-plus</a>
+                        </p>
+                        <p style="margin-bottom: 15px;">
+                            <strong>[7]</strong> "DAZN to relaunch FIFA Plus streaming hub in 2026" - The Desk - 30 ottobre 2025<br>
+                            <a href="https://thedesk.net/2025/11/dazn-fifa-plus-relaunch-2026/" target="_blank" style="color: var(--accent-mondo); text-decoration: underline;">https://thedesk.net/2025/11/dazn-fifa-plus-relaunch-2026/</a>
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Global Rights Sources -->
+                <div class="highlight-box" style="border-color: var(--accent-europa); margin-top: 25px;">
+                    <h3 style="color: var(--accent-europa);">🌍 Fonti Diritti Globali</h3>
+                    <div style="line-height: 2;">
+                        <p style="margin-bottom: 15px;">
+                            <strong>[8]</strong> "Diritti TV Coppa del Mondo FIFA 2026: aperta la vendita in Italia" - Digital News - 24 novembre 2025<br>
+                            <a href="https://www.digital-news.it/news/sport/53663/diritti-tv-coppa-del-mondo-fifa-2026-aperta-la-vendita-in-italia" target="_blank" style="color: var(--accent-europa); text-decoration: underline;">https://www.digital-news.it/news/sport/53663/diritti-tv-coppa-del-mondo-fifa-2026-aperta-la-vendita-in-italia</a>
+                        </p>
+                        <p style="margin-bottom: 15px;">
+                            <strong>[9]</strong> "Mondiali 2026, il nodo Italia trasforma i diritti tv in una gara aperta" - Calcio e Finanza - 9 settembre 2025<br>
+                            <a href="https://www.calcioefinanza.it/2025/09/10/diritti-tv-mondiali-2026-italia-rai-mediaset/" target="_blank" style="color: var(--accent-europa); text-decoration: underline;">https://www.calcioefinanza.it/2025/09/10/diritti-tv-mondiali-2026-italia-rai-mediaset/</a>
+                        </p>
+                        <p style="margin-bottom: 15px;">
+                            <strong>[10]</strong> "FIFA World Cup 2026 Broadcasting Deals Value (Breakdown)" - Salary Leaks - 13 ottobre 2025<br>
+                            <a href="https://www.salaryleaks.com/blogs/world-cup-2026-broadcasting-deals-value" target="_blank" style="color: var(--accent-europa); text-decoration: underline;">https://www.salaryleaks.com/blogs/world-cup-2026-broadcasting-deals-value</a>
+                        </p>
+                        <p style="margin-bottom: 15px;">
+                            <strong>[11]</strong> "EBU secures rights for FIFA World Cup 2026™ &amp; FIFA World Cup 2030™" - EBU (European Broadcasting Union) - 27 ottobre 2024<br>
+                            <a href="https://www.ebu.ch/news/2024/10/ebu-secures-rights-for-fifa-world-cup-2026TM-fifa-world-cup-2030TM" target="_blank" style="color: var(--accent-europa); text-decoration: underline;">https://www.ebu.ch/news/2024/10/ebu-secures-rights-for-fifa-world-cup-2026TM-fifa-world-cup-2030TM</a>
+                        </p>
+                        <p style="margin-bottom: 15px;">
+                            <strong>[12]</strong> "EBU extends broadcast rights deal for FIFA World Cup 2026™ and 2030 edition to additional European territories" - EBU - 19 ottobre 2025<br>
+                            <a href="https://www.ebu.ch/news/2025/10/ebu-extends-broadcast-rights-deal-for-fifa-world-cup-2026TM-and-2030-edition-to-additional-europ" target="_blank" style="color: var(--accent-europa); text-decoration: underline;">https://www.ebu.ch/news/2025/10/ebu-extends-broadcast-rights-deal-for-fifa-world-cup-2026TM-and-2030-edition-to-additional-europ</a>
+                        </p>
+                        <p style="margin-bottom: 15px;">
+                            <strong>[13]</strong> "UK media rights for FIFA World Cup 26™ and FIFA World Cup 2030™ confirmed" - inside.fifa.com - 16 dicembre 2024<br>
+                            <a href="https://inside.fifa.com/tournament-organisation/commercial/news/uk-media-rights-2026-2030-world-cups-bbc-itv" target="_blank" style="color: var(--accent-europa); text-decoration: underline;">https://inside.fifa.com/tournament-organisation/commercial/news/uk-media-rights-2026-2030-world-cups-bbc-itv</a>
+                        </p>
+                        <p style="margin-bottom: 15px;">
+                            <strong>[14]</strong> "Fox, Telemundo get US World Cup rights through 2026" - Fox Sports - 2015 (rinnovato fino al 2026)<br>
+                            <a href="https://www.foxsports.com/stories/soccer/fox-telemundo-get-us-world-cup-rights" target="_blank" style="color: var(--accent-europa); text-decoration: underline;">https://www.foxsports.com/stories/soccer/fox-telemundo-get-us-world-cup-rights</a>
+                        </p>
+                        <p style="margin-bottom: 15px;">
+                            <strong>[15]</strong> "IMG secures rights to broadcast FIFA World Cup 2026™ on Sport 24" - IMG - 16 marzo 2025<br>
+                            <a href="https://www.img.com/our-news/img-secures-rights-to-broadcast-fifa-world-cup-2026-on-sport-24" target="_blank" style="color: var(--accent-europa); text-decoration: underline;">https://www.img.com/our-news/img-secures-rights-to-broadcast-fifa-world-cup-2026-on-sport-24</a>
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Disclaimer -->
+                <div class="alert alert-warning" style="margin-top: 30px; border-color: var(--accent-mondo); background-color: rgba(253, 126, 20, 0.1);">
+                    <strong>⚠️ Disclaimer:</strong> Aggiornamento: 28 novembre 2025. I diritti sono in continua evoluzione. Consultare le fonti ufficiali FIFA per informazioni attuali.
+                </div>
+            </div>
+        </div>
+
+        <footer>
+            <p><strong>Fonte:</strong> Analisi diritti TV Coppa del Mondo FIFA 2026</p>
+            <p><strong>Ultimo aggiornamento:</strong> 28 novembre 2025</p>
+            <p style="margin-top: 15px; font-size: 0.95em;">Documento ottimizzato per presentazioni e consultazione rapida</p>
+        </footer>
+    </div>
+
+    <script>
+        function toggleSection(header) {
+            const section = header.parentElement;
+            section.classList.toggle('collapsed');
+        }
+
+        function toggleSubSection(header) {
+            const subSection = header.parentElement;
+            subSection.classList.toggle('collapsed');
+        }
+
+        // Smooth scroll behavior
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }
+            });
+        });
+
+        // Keyboard navigation
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+                document.querySelectorAll('.section').forEach(section => {
+                    section.classList.remove('collapsed');
+                });
+            }
+        });
+
+        // Initialize sections and sub-sections as collapsed
+        document.addEventListener('DOMContentLoaded', function() {
+            // Chiudi TUTTE le sezioni principali all'apertura
+            document.querySelectorAll('.section').forEach(section => {
+                section.classList.add('collapsed');
+            });
+
+            // Chiudi anche tutte le sotto-sezioni
+            document.querySelectorAll('.sub-section').forEach(subSection => {
+                subSection.classList.add('collapsed');
+            });
+        });
+
+    </script>
+</body>
+</html>
